@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/linear_1"
-        android:background="@color/gray_300"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -52,8 +52,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linear_1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/gray_300">
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
             android:id="@+id/tv_jogador2"
@@ -93,11 +92,13 @@
                 android:id="@+id/bt00"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                android:textSize="25sp" />
 
             <Button
                 android:id="@+id/bt01"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -105,6 +106,7 @@
 
             <Button
                 android:id="@+id/bt02"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -119,6 +121,7 @@
 
             <Button
                 android:id="@+id/bt10"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -126,6 +129,7 @@
 
             <Button
                 android:id="@+id/bt11"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -133,6 +137,7 @@
 
             <Button
                 android:id="@+id/bt12"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -147,6 +152,7 @@
 
             <Button
                 android:id="@+id/bt20"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -154,6 +160,7 @@
 
             <Button
                 android:id="@+id/bt21"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -161,6 +168,7 @@
 
             <Button
                 android:id="@+id/bt22"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_weight="1"
