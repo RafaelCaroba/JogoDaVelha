@@ -3,9 +3,17 @@
     <string name="action_settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Jogador_1">Jogador 1 (X)</string>
-    <string name="Jogador_2">Jogador 2 (O)</string>
+    <string name="Jogador_1">Jogador 1 |%1$s|</string>
+    <string name="Jogador_2">Jogador 2 |%1$s|</string>
     <string name="venceu">Parabéns!! Você venceu!!</string>
     <string name="velha">Deu velha :(</string>
+    <string name="contVelhas">Velhas:</string>
+
+
+
+
+    <string name="resetar">Reiniciar Placar</string>
+    <string name="tela_inicial">Voltar à tela inicial</string>
+    <string name="preferencias">Preferências</string>
 
 </resources>

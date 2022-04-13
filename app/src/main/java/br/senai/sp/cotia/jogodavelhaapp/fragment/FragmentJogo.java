@@ -1,12 +1,19 @@
 package br.senai.sp.cotia.jogodavelhaapp.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,6 +25,7 @@ import java.util.Random;
 
 import br.senai.sp.cotia.jogodavelhaapp.R;
 import br.senai.sp.cotia.jogodavelhaapp.databinding.FragmentJogoBinding;
+import br.senai.sp.cotia.jogodavelhaapp.util.PrefsUtil;
 
 @SuppressWarnings("ALL")
 public class FragmentJogo extends Fragment {
@@ -36,12 +44,48 @@ public class FragmentJogo extends Fragment {
     //variável Random para sortear quem começa.... gera valor boolean
     private Random random;
 
+    // variáveis de placar
+    private int placarJog1 = 0, placarjog2 = 0, placarvelha = 0;
+
     // var contador de jogadas
     private int numJogadas = 0;
+
+    private AlertDialog alerta;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //alerta dialogo
+        AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
+//titulo
+        alert.setTitle("Android");
+//mensagem
+        alert.setMessage("Deseja resetar?");
+//botão
+        alert.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getActivity(), "Sim", Toast.LENGTH_SHORT).show();
+                placarjog2 = 0;
+                placarJog1 = 0;
+                placarvelha = 0;
+                resetGame();
+                atualizaPlacar();
+            }
+        });
+        //botão negativo
+        alert.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getActivity(), "Não", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alerta = alert.create();
+
+
+        // habilita o menu neste fragment
+        setHasOptionsMenu(true);
+
         // instanciar o binding
         binding = FragmentJogoBinding.inflate(inflater, container, false);
 
@@ -75,8 +119,12 @@ public class FragmentJogo extends Fragment {
         //instancia o Random
         random = new Random();
         //define os simbolos dos jogadores
-        simbJog1 = "X";
-        simbJog2 = "O";
+        simbJog1 = PrefsUtil.getSimboloJog1(getContext());
+        simbJog2 = PrefsUtil.getSimboloJog2(getContext());
+
+        // altera o símbolo do jogador no placar
+        binding.tvJogador1.setText(getResources().getString(R.string.Jogador_1, simbJog1));
+        binding.tvJogador2.setText(getResources().getString(R.string.Jogador_2, simbJog2));
 
         //sorteia o jogador
         sorteia();
@@ -107,6 +155,38 @@ public class FragmentJogo extends Fragment {
             binding.linear2.setBackgroundColor(getResources().getColor(R.color.gray_300));
             binding.linear1.setBackgroundColor(getResources().getColor(R.color.white));
         }
+    }
+
+    private void atualizaPlacar(){
+        binding.tvPlacarJog1.setText(placarJog1+"");
+        binding.tvPlacarJog2.setText(placarjog2+"");
+        binding.tvPlacarVelha.setText(placarvelha+"");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // verifica botão clicado no menu
+        switch (item.getItemId()){
+            // caso resetar
+            case R.id.menu_resetar:
+              alerta.show();
+                break;
+
+            // caso tenha clicado em preferencias
+            case R.id.menu_preferencias:
+                NavHostFragment.findNavController(FragmentJogo.this).navigate(R.id.action_fragmentJogo_to_prefFragment);
+
+            case R.id.menu_inicio:
+                NavHostFragment.findNavController(FragmentJogo.this).navigate(R.id.action_fragmentJogo_to_fragmentInicio);
+
+        }
+        return true;
     }
 
     private boolean venceu() {
@@ -150,6 +230,8 @@ public class FragmentJogo extends Fragment {
         }
         return false;
     }
+
+
 
     private void resetGame() {
 //     for (int i = 0; i < 9; i++){
@@ -205,10 +287,19 @@ public class FragmentJogo extends Fragment {
         // verifica se venceu
         if (numJogadas >= 5 && venceu()) {
             Toast.makeText(getContext(), R.string.venceu, Toast.LENGTH_LONG).show();
+            if (simbolo.equals(simbJog1)){
+                placarJog1++;
+            } else{
+                placarjog2++;
+            }
+            atualizaPlacar();
             resetGame();
+
 
         } else if (numJogadas == 9) {
             Toast.makeText(getContext(), R.string.velha, Toast.LENGTH_LONG).show();
+            placarvelha++;
+            atualizaPlacar();
             resetGame();
         } else {
             // inverter a vez
@@ -216,7 +307,7 @@ public class FragmentJogo extends Fragment {
             atualizaVez();
         }
 
-
+//
 //        if (numJogadas > 8  && venceu() == false){
 //            Toast.makeText(getContext(), R.string.velha, Toast.LENGTH_LONG).show();
 //            resetGame();

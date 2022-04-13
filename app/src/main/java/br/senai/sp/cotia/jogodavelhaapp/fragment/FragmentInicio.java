@@ -10,11 +10,6 @@ import android.view.ViewGroup;
 
 import br.senai.sp.cotia.jogodavelhaapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentInicio#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentInicio extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
